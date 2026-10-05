@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAYMON EDITS // Lead Video Editor & Visual Artist</title>
+  <meta name="description" content="Cinematic portfolio of SAYMON EDITS — Professional Video Editor, Colorist, VFX & Visual Artist. High-impact commercial edits, music videos, and 3D composites.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'void-black': '#06080d',
+            'nle-dark': '#090d15',
+            'nle-panel': '#0d131f',
+            'nle-card': '#101725',
+            'neon-cyan': '#00f5d4',
+            'electric-blue': '#00b4d8',
+            'deep-violet': '#7209b7',
+            'vivid-magenta': '#f72585',
+            'amber-rec': '#ff3366',
+            'timecode-green': '#2ecc71',
+          },
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            tech: ['Orbitron', 'monospace'],
+            mono: ['JetBrains Mono', 'monospace'],
+            body: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Three.js 3D Library CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/nle-theme.css">
+</head>
+<body class="bg-void-black text-slate-100 min-h-screen relative antialiased selection:bg-neon-cyan selection:text-black overflow-x-hidden">
+
+  <!-- Ambient Film Grain Overlay -->
+  <div class="film-grain"></div>
+
+  <!-- Interactive 3D Render Waves Background Canvas -->
+  <canvas id="render-wave-canvas"></canvas>
+
+  <!-- =========================================================================
+       FLOATING PILL NAVBAR
+       ========================================================================= -->
+  <div class="floating-navbar-wrapper">
+    <header class="floating-navbar-pill">
+      
+      <!-- Brand Logo -->
+      <a href="#home" class="flex items-center gap-2.5 group pl-1">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-neon-cyan via-electric-blue to-deep-violet p-[1.5px] shadow-[0_0_12px_rgba(0,245,212,0.35)] group-hover:shadow-[0_0_20px_rgba(0,245,212,0.7)] transition-all">
+          <div class="w-full h-full bg-[#090d15] rounded-full flex items-center justify-center font-tech font-black text-white text-xs tracking-tighter">SE</div>
+        </div>
+        <span class="font-display font-bold text-sm text-white tracking-wider hidden sm:inline-block group-hover:text-neon-cyan transition-colors">
+          SAYMON EDITS
+        </span>
+      </a>
+
+      <!-- Simple Nav Links (Home, About, Journey, Projects, Skills, Contact) -->
+      <nav class="hidden md:flex items-center nav-pill-group">
+        <a href="#home" class="nav-pill-link nav-spy-link active">Home</a>
+        <a href="#about" class="nav-pill-link nav-spy-link">About</a>
+        <a href="#journey" class="nav-pill-link nav-spy-link">Journey</a>
+        <a href="#projects" class="nav-pill-link nav-spy-link">Projects</a>
+        <a href="#skills" class="nav-pill-link nav-spy-link">Skills</a>
+        <a href="#contact" class="nav-pill-link nav-spy-link">Contact</a>
+      </nav>
+
+      <!-- Right Header Actions (Audio FX Toggle & Let's Talk CTA) -->
+      <div class="flex items-center gap-2.5 pr-1">
+        <!-- Audio Synth Toggle -->
+        <button id="global-audio-toggle" class="audio-toggle-btn active" title="Toggle Sound FX (Hotkey: M)">
+          <i class="fa-solid fa-volume-high text-xs"></i>
+          <span class="hidden lg:inline text-[11px]">AUDIO ON</span>
+        </button>
+
+        <!-- CTA Direct Jump -->
+        <a href="#contact" class="hidden sm:inline-flex btn-cinema text-xs py-2 px-4 shadow-[0_0_15px_rgba(0,245,212,0.3)]">
+          <span>Let's Talk</span>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-300 hover:text-white focus:outline-none" aria-label="Toggle Navigation Menu">
+          <i class="fa-solid fa-bars-staggered text-lg"></i>
+        </button>
+      </div>
+
+    </header>
+
+    <!-- Mobile Navigation Floating Drawer -->
+    <div id="mobile-nav-drawer" class="hidden md:hidden mt-3 bg-[#090d15]/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-5 shadow-2xl space-y-2 font-mono text-xs uppercase">
+      <a href="#home" class="block px-4 py-2.5 rounded-lg text-slate-300 hover:text-neon-cyan hover:bg-white/5 transition-all">Home</a>
+      <a href="#about" class="block px-4 py-2.5 rounded-lg text-slate-300 hover:text-neon-cyan hover:bg-white/5 transition-all">About</a>
+      <a href="#journey" class="block px-4 py-2.5 rounded-lg text-slate-300 hover:text-neon-cyan hover:bg-white/5 transition-all">Journey</a>
+      <a href="#projects" class="block px-4 py-2.5 rounded-lg text-slate-300 hover:text-neon-cyan hover:bg-white/5 transition-all">Projects</a>
+      <a href="#skills" class="block px-4 py-2.5 rounded-lg text-slate-300 hover:text-neon-cyan hover:bg-white/5 transition-all">Skills</a>
+      <a href="#contact" class="block px-4 py-2.5 rounded-lg text-slate-300 hover:text-neon-cyan hover:bg-white/5 transition-all">Contact</a>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================= -->
+  <main class="content-layer space-y-16 sm:space-y-24">
+
+    <!-- =======================================================================
+         SECTION 1: HOME (TWO-COLUMN CINEMATIC SHOWCASE ENTRY)
+         ======================================================================= -->
+    <section id="home" class="relative min-h-[92vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-28 pb-12 overflow-hidden scroll-mt-28">
+      
+      <!-- Ambient Glow Orbs -->
+      <div class="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-deep-violet/20 via-neon-cyan/15 to-transparent rounded-full blur-[140px] pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto w-full relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          
+          <!-- Left Column: Typography & Typing Effect -->
+          <div class="lg:col-span-7 space-y-4 sm:space-y-5 text-left flex flex-col justify-center">
+            
+            <!-- Status Beacon Badge -->
+            <div>
+              <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-neon-cyan/30 text-xs font-mono text-neon-cyan shadow-[0_0_20px_rgba(0,245,212,0.15)]">
+                <span class="w-2 h-2 rounded-full bg-neon-cyan animate-pulse"></span>
+                <span>AVAILABLE FOR COMMISSIONS // 2026</span>
+              </div>
+            </div>
+
+            <!-- Full Name Prominent Display -->
+            <div class="space-y-0">
+              <h1 class="text-4xl sm:text-5xl lg:text-5xl font-display font-black tracking-tight text-white leading-none">
+                SAYMON EDITS
+              </h1>
+            </div>
+
+            <!-- Fixed text "I am " + Dynamic Typewriter Multi-phrase -->
+            <div class="text-xl sm:text-2xl lg:text-3xl font-display font-bold text-white flex flex-wrap items-center gap-2 min-h-[2.2rem]">
+              <span class="text-slate-300">I am a</span>
+              <span class="gradient-text-cyber font-extrabold border-b-2 border-neon-cyan/50 pb-0.5">
+                <span id="hero-typewriter-text"></span><span class="typewriter-cursor"></span>
+              </span>
+            </div>
+
+            <!-- Description Subtitle -->
+            <p class="text-slate-400 text-sm sm:text-base leading-relaxed max-w-xl">
+              I transform raw videos into clean, professional, and high-retention content. Specializing in fast-paced editing and smooth transitions to make your Reels, TikToks, and YouTube videos impossible to ignore.
+            </p>
+
+            <!-- Futuristic Glowing CTA Action Buttons -->
+            <div class="flex flex-wrap items-center gap-3.5 pt-1">
+              <button id="hero-showreel-btn" class="btn-cinema text-xs sm:text-sm py-3 px-7 group shadow-[0_0_25px_rgba(0,245,212,0.35)]">
+                <i class="fa-solid fa-play text-xs transition-transform group-hover:scale-125"></i>
+                <span>Watch Showreel 2026</span>
+              </button>
+
+              <a href="#projects" class="btn-ghost-cinema text-xs sm:text-sm py-3 px-6">
+                <i class="fa-solid fa-film text-xs text-neon-cyan"></i>
+                <span>Explore Projects</span>
+              </a>
+
+              <a href="#contact" class="btn-ghost-cinema text-xs sm:text-sm py-3 px-6">
+                <i class="fa-solid fa-paper-plane text-xs text-electric-blue"></i>
+                <span>Let's Talk</span>
+              </a>
+            </div>
+
+            <!-- Floating Specs Quick Badges Strip -->
+            <div class="pt-3 grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-xl">
+              <div class="glass-panel p-2.5 text-center border-white/5 hover:border-neon-cyan/40 transition-colors">
+                <div class="text-base sm:text-lg font-tech font-bold text-neon-cyan">4K / 1080p</div>
+                <div class="text-[9px] font-mono text-slate-400 uppercase tracking-wider mt-0.5">HIGH DEFINITION</div>
+              </div>
+              <div class="glass-panel p-2.5 text-center border-white/5 hover:border-electric-blue/40 transition-colors">
+                <div class="text-base sm:text-lg font-tech font-bold text-electric-blue">COLOR GRADING</div>
+                <div class="text-[9px] font-mono text-slate-400 uppercase tracking-wider mt-0.5">CINEMATIC MOOD</div>
+              </div>
+              <div class="glass-panel p-2.5 text-center border-white/5 hover:border-deep-violet/40 transition-colors">
+                <div class="text-base sm:text-lg font-tech font-bold text-purple-400">SOUND DESIGN</div>
+                <div class="text-[9px] font-mono text-slate-400 uppercase tracking-wider mt-0.5">AUDIO CLEANING & SFX</div>
+              </div>
+              <div class="glass-panel p-2.5 text-center border-white/5 hover:border-vivid-magenta/40 transition-colors">
+                <div class="text-base sm:text-lg font-tech font-bold text-vivid-magenta">50+ VIDEOS</div>
+                <div class="text-[9px] font-mono text-slate-400 uppercase tracking-wider mt-0.5">SUCCESSFULLY DELIVERED</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Interactive 3D Cinema Lens Viewport -->
+          <div class="lg:col-span-5 relative flex items-center justify-center">
+            
+            <!-- Viewport Glass Frame Container -->
+            <div class="relative w-full max-w-[420px] aspect-square rounded-3xl glass-panel-cinema p-2 border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(0,245,212,0.12)] overflow-hidden group mx-auto">
+              
+              <!-- Viewport HUD Overlay Top -->
+              <div class="absolute top-3.5 left-4 right-4 z-20 flex items-center justify-between pointer-events-none text-[10px] font-mono">
+                <div class="flex items-center gap-2 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 text-neon-cyan">
+                  <span class="w-1.5 h-1.5 rounded-full bg-neon-cyan animate-ping"></span>
+                  <span>3D NLE TIMELINE // MULTI-TRACK</span>
+                </div>
+                <div class="bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 text-slate-400 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>SCRUB LIVE</span>
+                </div>
+              </div>
+
+              <!-- The Three.js 3D Canvas Mount Point -->
+              <div id="hero-3d-canvas-container" class="w-full h-full flex items-center justify-center relative cursor-grab active:cursor-grabbing"></div>
+
+              <!-- Viewport HUD Overlay Bottom -->
+              <div class="absolute bottom-3.5 left-4 right-4 z-20 flex items-center justify-between pointer-events-none text-[10px] font-mono">
+                <div class="bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 text-slate-300 flex items-center gap-2">
+                  <i class="fa-solid fa-arrows-left-right text-rose-400 text-xs"></i>
+                  <span>MOVE CURSOR TO SCRUB PLAYHEAD & TILT</span>
+                </div>
+                <div class="bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-cyan-500/30 text-neon-cyan font-bold">
+                  CLICK TO CUT
+                </div>
+              </div>
+
+              <!-- Ambient Corner Flare -->
+              <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-neon-cyan/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Visual Breathing Room Divider -->
+    <div class="section-divider"></div>
+
+    <!-- =======================================================================
+         SECTION 2: ABOUT (ABOUT ME & CREATIVE PHILOSOPHY)
+         ======================================================================= -->
+    <section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20 sm:pt-12 sm:pb-28 scroll-mt-20">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        
+        <!-- Left: Artistic Portrait & 3D Viewport Frame -->
+        <div class="lg:col-span-5 relative group">
+          <div class="relative rounded-2xl overflow-hidden nle-border-glow shadow-2xl bg-slate-900 aspect-[4/5]">
+            <img src="assets/images/about-profile.jpg" 
+                 alt="SAYMON EDITS Profile" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+            
+            <!-- Viewport HUD Overlays -->
+            <div class="absolute top-4 left-4 font-mono text-[11px] bg-black/70 px-3 py-1 rounded border border-white/20 text-neon-cyan backdrop-blur-md">
+              VIEWPORT // CAM_A [PRORES 4444 XQ]
+            </div>
+            <div class="absolute bottom-4 left-4 right-4 bg-slate-950/85 backdrop-blur-md p-3.5 rounded-xl border border-white/10 flex justify-between items-center text-xs font-mono">
+              <span class="text-slate-300">ISO 800 • 35mm T1.5 • 24fps</span>
+              <span class="text-neon-cyan font-bold">MONITOR 01</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Storytelling Bio & Philosophy -->
+        <div class="lg:col-span-7 space-y-8">
+          <div class="flex items-center gap-3">
+            <span class="cyber-tag"><i class="fa-solid fa-compact-disc"></i> PHILOSOPHY & VISION</span>
+            <div class="h-[1px] flex-1 bg-white/10"></div>
+          </div>
+
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white tracking-wide leading-[1.25]">
+            The first 3 seconds of your video <br>
+            <span class="gradient-text-cyber">decide your success.</span>
+          </h2>
+
+          <div class="space-y-5 mt-2">
+            <p class="text-slate-300 text-sm sm:text-base leading-loose">
+              I'm Nabil, the founder of SAYMON Edits. I specialize in crafting high-quality Instagram Reels and dynamic short-form videos that stand out.
+            </p>
+
+            <p class="text-slate-400 text-sm sm:text-base leading-loose">
+              Working closely with creators and brands, I combine smooth pacing with precise sound design to build engaging content that connects with your audience.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Visual Breathing Room Divider -->
+    <div class="section-divider"></div>
+
+    <!-- =======================================================================
+         SECTION 3: JOURNEY (INTERACTIVE NLE TIMELINE)
+         ======================================================================= -->
+    <section id="journey" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20 sm:pt-12 sm:pb-28 scroll-mt-20">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-4 mb-14">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-900 border border-white/10 text-xs font-mono text-neon-cyan">
+          <i class="fa-solid fa-layer-group text-[10px]"></i>
+          <span>SEQUENCE EDITOR // CAREER HISTORY</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-display font-extrabold text-white">
+          THE CAREER <span class="gradient-text-cyber">JOURNEY</span>
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+          Scrub the playhead or click any clip block along the video & audio tracks to inspect key client milestones, deliverables, and festival achievements.
+        </p>
+      </div>
+
+      <!-- NLE Sequence Container -->
+      <div class="nle-timeline-wrapper">
+        
+        <!-- NLE Control / Top Bar -->
+        <div class="nle-top-bar">
+          <div class="flex items-center gap-3">
+            <span class="text-xs font-mono text-slate-400 font-bold uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-video text-neon-cyan"></i> SEQUENCE: CAREER_MASTER_TIMELINE_V3
+            </span>
+          </div>
+
+          <!-- Transport Controls -->
+          <div class="nle-transport-controls">
+            <button id="nle-prev-keyframe-btn" class="nle-btn-tool" title="Jump to Previous Milestone">
+              <i class="fa-solid fa-backward-step text-xs"></i>
+            </button>
+            <button id="nle-play-btn" class="nle-btn-tool text-white" title="Play Sequence Animation">
+              <i class="fa-solid fa-play text-xs"></i>
+            </button>
+            <button id="nle-next-keyframe-btn" class="nle-btn-tool" title="Jump to Next Milestone">
+              <i class="fa-solid fa-forward-step text-xs"></i>
+            </button>
+          </div>
+
+          <!-- Active Timecode Readout -->
+          <div class="flex items-center gap-3">
+            <span class="text-[11px] font-mono text-slate-500 uppercase">PLAYHEAD TC:</span>
+            <div id="timeline-timecode-readout" class="smpte-timecode text-xs">
+              01:01:24:18
+            </div>
+          </div>
+        </div>
+
+        <!-- NLE Ruler Bar -->
+        <div class="nle-ruler-container">
+          <div class="nle-ruler-header">TC / RULER</div>
+          <div class="nle-ruler-marks">
+            <div class="ruler-tick" style="left: 0%;">2022 // LAUNCH</div>
+            <div class="ruler-tick" style="left: 25%;">2023 // FREELANCING</div>
+            <div class="ruler-tick" style="left: 50%;">2024 // SAYMON EDITS</div>
+            <div class="ruler-tick" style="left: 75%;">2025 // INTERNATIONAL</div>
+            <div class="ruler-tick" style="left: 98%;">PRESENT</div>
+          </div>
+        </div>
+
+        <!-- NLE Tracks Body with Scrubbable Playhead -->
+        <div class="nle-tracks-body">
+          
+          <!-- Playhead Scrubber Line -->
+          <div class="nle-playhead">
+            <div class="nle-playhead-handle" title="Drag to Scrub Sequence"></div>
+          </div>
+
+          <!-- Track V2: VFX & 3D Motion -->
+          <div class="nle-track-row" data-track="V2">
+            <div class="nle-track-header">
+              <div class="track-label">
+                <span>V2</span>
+                <span class="text-[9px] text-blue-400">VFX / 3D</span>
+              </div>
+              <div class="track-controls">
+                <span class="track-pill active">S</span>
+                <span class="track-pill">M</span>
+                <span class="track-pill">🔒</span>
+              </div>
+            </div>
+            <div class="nle-track-lane"></div>
+          </div>
+
+          <!-- Track V1: Master Video & Story -->
+          <div class="nle-track-row" data-track="V1">
+            <div class="nle-track-header">
+              <div class="track-label">
+                <span>V1</span>
+                <span class="text-[9px] text-purple-400">MASTER</span>
+              </div>
+              <div class="track-controls">
+                <span class="track-pill active">S</span>
+                <span class="track-pill">M</span>
+                <span class="track-pill">🔒</span>
+              </div>
+            </div>
+            <div class="nle-track-lane"></div>
+          </div>
+
+          <!-- Track A1: Dialogue & Foley -->
+          <div class="nle-track-row" data-track="A1">
+            <div class="nle-track-header">
+              <div class="track-label">
+                <span>A1</span>
+                <span class="text-[9px] text-emerald-400">VOX/FX</span>
+              </div>
+              <div class="track-controls">
+                <span class="track-pill active">S</span>
+                <span class="track-pill">M</span>
+                <span class="track-pill">🔒</span>
+              </div>
+            </div>
+            <div class="nle-track-lane"></div>
+          </div>
+
+          <!-- Track A2: Score & Sound Design -->
+          <div class="nle-track-row" data-track="A2">
+            <div class="nle-track-header">
+              <div class="track-label">
+                <span>A2</span>
+                <span class="text-[9px] text-amber-400">SCORE</span>
+              </div>
+              <div class="track-controls">
+                <span class="track-pill active">S</span>
+                <span class="track-pill">M</span>
+                <span class="track-pill">🔒</span>
+              </div>
+            </div>
+            <div class="nle-track-lane"></div>
+          </div>
+
+        </div>
+
+        <!-- Dynamic Clip Inspector Panel -->
+        <div id="nle-clip-inspector-data" class="clip-inspector">
+          <!-- Populated dynamically via nle-timeline.js -->
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Visual Breathing Room Divider -->
+    <div class="section-divider"></div>
+
+    <!-- =======================================================================
+         SECTION 4: PROJECTS (SHOWCASE GRID & BEFORE/AFTER LAB)
+         ======================================================================= -->
+    <section id="projects" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20 sm:pt-12 sm:pb-28 scroll-mt-20 space-y-24">
+      
+      <!-- Showcase Header & Grid -->
+      <div>
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+          <div class="space-y-3">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-900 border border-white/10 text-xs font-mono text-neon-cyan">
+              <i class="fa-solid fa-clapperboard text-[10px]"></i>
+              <span>CURATED WORKS // 2024 - 2026</span>
+            </div>
+            <h2 class="text-3xl sm:text-5xl font-display font-extrabold text-white">
+              FEATURED <span class="gradient-text-cyber">PROJECTS</span>
+            </h2>
+          </div>
+
+          <!-- Category Filter Tabs -->
+          <div class="flex flex-wrap gap-2 filter-tabs-container">
+            <button class="showcase-filter-btn active whitespace-nowrap px-4 py-2 rounded-lg text-xs font-mono font-bold tracking-wider uppercase border border-neon-cyan text-neon-cyan bg-cyan-500/10 shadow-[0_0_15px_rgba(0,245,212,0.25)] transition-all" data-filter="all">
+              All Works
+            </button>
+            <button class="showcase-filter-btn whitespace-nowrap px-4 py-2 rounded-lg text-xs font-mono font-bold tracking-wider uppercase border border-slate-800 text-slate-400 hover:border-slate-600 hover:text-white transition-all" data-filter="commercial">
+              Commercials & Ads
+            </button>
+            <button class="showcase-filter-btn whitespace-nowrap px-4 py-2 rounded-lg text-xs font-mono font-bold tracking-wider uppercase border border-slate-800 text-slate-400 hover:border-slate-600 hover:text-white transition-all" data-filter="creator">
+              Creator Content
+            </button>
+          </div>
+        </div>
+
+        <!-- Project Cards Grid with 3D Tilt & Video Hover Previews -->
+        <div id="showcase-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Project 1 -->
+          <div class="showcase-card tilt-card glass-panel overflow-hidden group cursor-pointer" data-id="proj-1" data-categories="creator short-form">
+            <div class="relative aspect-video overflow-hidden bg-slate-950">
+              <img src="assets/images/proj-1-thumb.jpg" 
+                   alt="Short-Form Creator Content" 
+                   class="card-poster-img w-full h-full object-cover transition-opacity duration-300">
+              <div class="tilt-glare"></div>
+              <div class="absolute top-3 right-3 font-mono text-[10px] bg-black/80 backdrop-blur-md px-2.5 py-1 rounded text-neon-cyan border border-cyan-500/30">
+                SHORT-FORM
+              </div>
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                <div class="w-12 h-12 rounded-full bg-neon-cyan text-black flex items-center justify-center font-bold text-sm shadow-[0_0_20px_#00f5d4] transform scale-75 group-hover:scale-100 transition-transform">
+                  <i class="fa-solid fa-play ml-0.5"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span class="text-neon-cyan font-bold">Talking Head & Social Media Edit</span>
+                <span>Creator</span>
+              </div>
+              <h3 class="text-lg font-display font-bold text-white group-hover:text-neon-cyan transition-colors">Short-Form Creator Content</h3>
+              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">Fast-paced short-form content edit optimized for Reels, TikTok, and YouTube Shorts.</p>
+              <button class="open-modal-trigger w-full mt-3 py-2.5 rounded-lg bg-slate-900/80 border border-white/10 hover:border-neon-cyan text-xs font-mono text-slate-300 hover:text-white transition-all">
+                Launch Player & Specs <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[10px] text-neon-cyan"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="showcase-card tilt-card glass-panel overflow-hidden group cursor-pointer" data-id="proj-2" data-categories="creator short-form">
+            <div class="relative aspect-video overflow-hidden bg-slate-950">
+              <img src="assets/images/proj-2-thumb.jpg" 
+                   alt="Fintech Creator Content" 
+                   class="card-poster-img w-full h-full object-cover transition-opacity duration-300">
+              <div class="tilt-glare"></div>
+              <div class="absolute top-3 right-3 font-mono text-[10px] bg-black/80 backdrop-blur-md px-2.5 py-1 rounded text-purple-400 border border-purple-500/30">
+                SHORT-FORM
+              </div>
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                <div class="w-12 h-12 rounded-full bg-neon-cyan text-black flex items-center justify-center font-bold text-sm shadow-[0_0_20px_#00f5d4] transform scale-75 group-hover:scale-100 transition-transform">
+                  <i class="fa-solid fa-play ml-0.5"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span class="text-purple-400 font-bold">Explainer Talking Head & Info-Edit</span>
+                <span>Creator</span>
+              </div>
+              <h3 class="text-lg font-display font-bold text-white group-hover:text-purple-400 transition-colors">Fintech Creator Content</h3>
+              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">Engaging fintech explainer video with motion graphics, captions, and seamless transitions to maximize viewer retention.</p>
+              <button class="open-modal-trigger w-full mt-3 py-2.5 rounded-lg bg-slate-900/80 border border-white/10 hover:border-purple-400 text-xs font-mono text-slate-300 hover:text-white transition-all">
+                Launch Player & Specs <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[10px] text-purple-400"></i>
+              </button>
+            </div>
+          </div>
+
+
+          <!-- Project 4 -->
+          <div class="showcase-card tilt-card glass-panel overflow-hidden group cursor-pointer" data-id="proj-4" data-categories="creator short-form">
+            <div class="relative aspect-video overflow-hidden bg-slate-950">
+              <img src="assets/images/proj-4-thumb.jpg" 
+                   alt="Leadership & Corporate Culture" 
+                   class="card-poster-img w-full h-full object-cover transition-opacity duration-300">
+              <div class="tilt-glare"></div>
+              <div class="absolute top-3 right-3 font-mono text-[10px] bg-black/80 backdrop-blur-md px-2.5 py-1 rounded text-cyan-400 border border-cyan-500/30">
+                SHORT-FORM
+              </div>
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                <div class="w-12 h-12 rounded-full bg-neon-cyan text-black flex items-center justify-center font-bold text-sm shadow-[0_0_20px_#00f5d4] transform scale-75 group-hover:scale-100 transition-transform">
+                  <i class="fa-solid fa-play ml-0.5"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span class="text-cyan-400 font-bold">Corporate Essay Edit</span>
+                <span>Commercial</span>
+              </div>
+              <h3 class="text-lg font-display font-bold text-white group-hover:text-cyan-400 transition-colors">Leadership & Corporate Culture</h3>
+              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">High-end corporate essay edit for executive branding. Features professional motion graphics, clean cuts, and storytelling focus.</p>
+              <button class="open-modal-trigger w-full mt-3 py-2.5 rounded-lg bg-slate-900/80 border border-white/10 hover:border-cyan-400 text-xs font-mono text-slate-300 hover:text-white transition-all">
+                Launch Player & Specs <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[10px] text-cyan-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Project 5 -->
+          <div class="showcase-card tilt-card glass-panel overflow-hidden group cursor-pointer" data-id="proj-5" data-categories="creator short-form">
+            <div class="relative aspect-video overflow-hidden bg-slate-950">
+              <img src="assets/images/proj-5-thumb.jpg" 
+                   alt="Motivational Visual Essay" 
+                   class="card-poster-img w-full h-full object-cover object-top transition-opacity duration-300">
+              <div class="tilt-glare"></div>
+              <div class="absolute top-3 right-3 font-mono text-[10px] bg-black/80 backdrop-blur-md px-2.5 py-1 rounded text-rose-400 border border-rose-500/30">
+                SHORT-FORM
+              </div>
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                <div class="w-12 h-12 rounded-full bg-neon-cyan text-black flex items-center justify-center font-bold text-sm shadow-[0_0_20px_#00f5d4] transform scale-75 group-hover:scale-100 transition-transform">
+                  <i class="fa-solid fa-play ml-0.5"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span class="text-rose-400 font-bold">Self-Improvement Edit</span>
+                <span>Creator</span>
+              </div>
+              <h3 class="text-lg font-display font-bold text-white group-hover:text-rose-400 transition-colors">Motivational Visual Essay</h3>
+              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">Dynamic motivational content featuring high-energy pacing, impactful sound effects, and compelling storytelling.</p>
+              <button class="open-modal-trigger w-full mt-3 py-2.5 rounded-lg bg-slate-900/80 border border-white/10 hover:border-rose-400 text-xs font-mono text-slate-300 hover:text-white transition-all">
+                Launch Player & Specs <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[10px] text-rose-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Project 6 -->
+          <div class="showcase-card tilt-card glass-panel overflow-hidden group cursor-pointer" data-id="proj-6" data-categories="commercial short-form">
+            <div class="relative aspect-video overflow-hidden bg-slate-950">
+              <img src="assets/images/proj-6-thumb.jpg" 
+                   alt="Local Business Commercial" 
+                   class="card-poster-img w-full h-full object-cover transition-opacity duration-300">
+              <div class="tilt-glare"></div>
+              <div class="absolute top-3 right-3 font-mono text-[10px] bg-black/80 backdrop-blur-md px-2.5 py-1 rounded text-yellow-400 border border-yellow-500/30">
+                COMMERCIAL
+              </div>
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                <div class="w-12 h-12 rounded-full bg-neon-cyan text-black flex items-center justify-center font-bold text-sm shadow-[0_0_20px_#00f5d4] transform scale-75 group-hover:scale-100 transition-transform">
+                  <i class="fa-solid fa-play ml-0.5"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span class="text-yellow-400 font-bold">Promo Ad & Corporate Video Edit</span>
+                <span>Commercial</span>
+              </div>
+              <h3 class="text-lg font-display font-bold text-white group-hover:text-yellow-400 transition-colors">Local Business Commercial</h3>
+              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">Professional promotional advertisement for a local business, showcasing services through smooth corporate editing and motion graphics.</p>
+              <button class="open-modal-trigger w-full mt-3 py-2.5 rounded-lg bg-slate-900/80 border border-white/10 hover:border-yellow-400 text-xs font-mono text-slate-300 hover:text-white transition-all">
+                Launch Player & Specs <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[10px] text-yellow-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Project 7 -->
+          <div class="showcase-card tilt-card glass-panel overflow-hidden group cursor-pointer" data-id="proj-7" data-categories="commercial short-form">
+            <div class="relative aspect-video overflow-hidden bg-slate-950">
+              <img src="assets/images/proj-7-thumb.png" 
+                   alt="Premium Workspace Commercial" 
+                   class="card-poster-img w-full h-full object-cover transition-opacity duration-300">
+              <div class="tilt-glare"></div>
+              <div class="absolute top-3 right-3 font-mono text-[10px] bg-black/80 backdrop-blur-md px-2.5 py-1 rounded text-emerald-400 border border-emerald-500/30">
+                COMMERCIAL
+              </div>
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                <div class="w-12 h-12 rounded-full bg-neon-cyan text-black flex items-center justify-center font-bold text-sm shadow-[0_0_20px_#00f5d4] transform scale-75 group-hover:scale-100 transition-transform">
+                  <i class="fa-solid fa-play ml-0.5"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span class="text-emerald-400 font-bold">B2B Promo & Real Estate Edit</span>
+                <span>Commercial</span>
+              </div>
+              <h3 class="text-lg font-display font-bold text-white group-hover:text-emerald-400 transition-colors">Premium Workspace Commercial</h3>
+              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">B2B promotional commercial for a premium coworking space, featuring dynamic transitions and professional real estate visuals.</p>
+              <button class="open-modal-trigger w-full mt-3 py-2.5 rounded-lg bg-slate-900/80 border border-white/10 hover:border-emerald-400 text-xs font-mono text-slate-300 hover:text-white transition-all">
+                Launch Player & Specs <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[10px] text-emerald-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Project 8 -->
+          <div class="showcase-card tilt-card glass-panel overflow-hidden group cursor-pointer" data-id="proj-8" data-categories="commercial short-form">
+            <div class="relative aspect-video overflow-hidden bg-slate-950">
+              <img src="assets/images/proj-8-thumb.jpg" 
+                   alt="Cinematic Travel & Adventure Ad" 
+                   class="card-poster-img w-full h-full object-cover transition-opacity duration-300">
+              <div class="tilt-glare"></div>
+              <div class="absolute top-3 right-3 font-mono text-[10px] bg-black/80 backdrop-blur-md px-2.5 py-1 rounded text-orange-400 border border-orange-500/30">
+                COMMERCIAL
+              </div>
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                <div class="w-12 h-12 rounded-full bg-neon-cyan text-black flex items-center justify-center font-bold text-sm shadow-[0_0_20px_#00f5d4] transform scale-75 group-hover:scale-100 transition-transform">
+                  <i class="fa-solid fa-play ml-0.5"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span class="text-orange-400 font-bold">Tourism Promo & Action Edit</span>
+                <span>Commercial</span>
+              </div>
+              <h3 class="text-lg font-display font-bold text-white group-hover:text-orange-400 transition-colors">Cinematic Travel & Adventure Ad</h3>
+              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">High-energy cinematic travel and adventure commercial with action-packed sequences and immersive sound design.</p>
+              <button class="open-modal-trigger w-full mt-3 py-2.5 rounded-lg bg-slate-900/80 border border-white/10 hover:border-orange-400 text-xs font-mono text-slate-300 hover:text-white transition-all">
+                Launch Player & Specs <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[10px] text-orange-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Project 9 -->
+          <div class="showcase-card tilt-card glass-panel overflow-hidden group cursor-pointer" data-id="proj-9" data-categories="commercial">
+            <div class="relative aspect-video overflow-hidden bg-slate-950">
+              <img src="assets/images/proj-9-thumb.jpg" 
+                   alt="Luxury Travel Promo" 
+                   class="card-poster-img w-full h-full object-cover transition-opacity duration-300">
+              <div class="tilt-glare"></div>
+              <div class="absolute top-3 right-3 font-mono text-[10px] bg-black/80 backdrop-blur-md px-2.5 py-1 rounded text-pink-400 border border-pink-500/30">
+                COMMERCIAL
+              </div>
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                <div class="w-12 h-12 rounded-full bg-neon-cyan text-black flex items-center justify-center font-bold text-sm shadow-[0_0_20px_#00f5d4] transform scale-75 group-hover:scale-100 transition-transform">
+                  <i class="fa-solid fa-play ml-0.5"></i>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span class="text-pink-400 font-bold">Q&A Tourism Commercial</span>
+                <span>Commercial</span>
+              </div>
+              <h3 class="text-lg font-display font-bold text-white group-hover:text-pink-400 transition-colors">Luxury Travel Promo</h3>
+              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">Premium tourism commercial highlighting luxury travel and lifestyle experiences through engaging Q&A formatting.</p>
+              <button class="open-modal-trigger w-full mt-3 py-2.5 rounded-lg bg-slate-900/80 border border-white/10 hover:border-pink-400 text-xs font-mono text-slate-300 hover:text-white transition-all">
+                Launch Player & Specs <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[10px] text-pink-400"></i>
+              </button>
+            </div>
+          </div>
+
+        </div><!-- End of #showcase-grid -->
+
+        <!-- Show More Button (Centered outside grid) -->
+        <div id="show-more-container" class="mt-12 flex justify-center items-center w-full text-center" style="display: flex; justify-content: center; align-items: center; width: 100%;">
+          <button id="show-more-btn" class="btn-cinema text-xs sm:text-sm py-3.5 px-8 shadow-[0_0_20px_rgba(0,245,212,0.25)] group">
+            <span>Show More</span>
+            <i class="fa-solid fa-chevron-down ml-2 text-neon-cyan transform group-hover:translate-y-1 transition-transform"></i>
+          </button>
+        </div>
+
+      </div>
+
+    <!-- Visual Breathing Room Divider -->
+    <div class="section-divider"></div>
+
+    <!-- =======================================================================
+         SECTION 5: SKILLS (NLE SUITE & BROADCAST METERS)
+         ======================================================================= -->
+    <section id="skills" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20 sm:pt-12 sm:pb-28 scroll-mt-20">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-900 border border-white/10 text-xs font-mono text-neon-cyan">
+          <i class="fa-solid fa-bolt text-[10px]"></i>
+          <span>CREATIVE POWER</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-display font-extrabold text-white">
+          SKILLS & <span class="gradient-text-cyber">CREATIVE EXPERTISE</span>
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+          High-retention video creation, cinematic editing, and visual assets designed to capture attention and grow your brand.
+        </p>
+      </div>
+
+      <!-- Tech Stack Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Skill 1 -->
+        <div class="glass-panel p-6 space-y-4 border-white/5 hover:border-purple-500/40">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-purple-900/40 border border-purple-500/40 flex items-center justify-center font-bold font-mono text-purple-400 text-lg">
+                Mo
+              </div>
+              <div>
+                <h3 class="font-tech font-bold text-base text-white">Animation & Motion Graphics</h3>
+              </div>
+            </div>
+            <span class="text-sm font-mono font-bold text-purple-400">80%</span>
+          </div>
+          <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden p-[1px] border border-white/10">
+            <div class="vu-meter-bar h-full bg-gradient-to-r from-purple-500 to-neon-cyan rounded-full transition-all duration-300" style="width: 80%;"></div>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">Keyframing</span>
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">Dynamic Text</span>
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">Smooth Intro</span>
+          </div>
+        </div>
+
+        <!-- Skill 2 -->
+        <div class="glass-panel p-6 space-y-4 border-white/5 hover:border-cyan-500/40">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-cyan-900/40 border border-cyan-500/40 flex items-center justify-center font-bold font-mono text-neon-cyan text-lg">
+                Cc
+              </div>
+              <div>
+                <h3 class="font-tech font-bold text-base text-white">Color Correction & Grading</h3>
+              </div>
+            </div>
+            <span class="text-sm font-mono font-bold text-neon-cyan">70%</span>
+          </div>
+          <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden p-[1px] border border-white/10">
+            <div class="vu-meter-bar h-full bg-gradient-to-r from-cyan-500 to-emerald-400 rounded-full transition-all duration-300" style="width: 70%;"></div>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">Contrast Fix</span>
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">Mood Setup</span>
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">Skin Tones</span>
+          </div>
+        </div>
+
+        <!-- Skill 3 -->
+        <div class="glass-panel p-6 space-y-4 border-white/5 hover:border-blue-500/40">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-blue-900/40 border border-blue-500/40 flex items-center justify-center font-bold font-mono text-blue-400 text-lg">
+                Au
+              </div>
+              <div>
+                <h3 class="font-tech font-bold text-base text-white">Audio Cleaning & Sound Design</h3>
+              </div>
+            </div>
+            <span class="text-sm font-mono font-bold text-blue-400">80%</span>
+          </div>
+          <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden p-[1px] border border-white/10">
+            <div class="vu-meter-bar h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full transition-all duration-300" style="width: 80%;"></div>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">Noise Removal</span>
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">SFX Mixing</span>
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">Ambient Foley</span>
+          </div>
+        </div>
+
+        <!-- Skill 4 -->
+        <div class="glass-panel p-6 space-y-4 border-white/5 hover:border-sky-500/40">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-sky-900/40 border border-sky-500/40 flex items-center justify-center font-bold font-mono text-sky-400 text-lg">
+                St
+              </div>
+              <div>
+                <h3 class="font-tech font-bold text-base text-white">Creative Storytelling</h3>
+              </div>
+            </div>
+            <span class="text-sm font-mono font-bold text-sky-400">85%</span>
+          </div>
+          <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden p-[1px] border border-white/10">
+            <div class="vu-meter-bar h-full bg-gradient-to-r from-sky-500 to-cyan-300 rounded-full transition-all duration-300" style="width: 85%;"></div>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">Pacing & Rhythm</span>
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">Engagement</span>
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">Retention</span>
+          </div>
+        </div>
+
+        <!-- Skill 5 -->
+        <div class="glass-panel p-6 space-y-4 border-white/5 hover:border-orange-500/40">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-orange-900/40 border border-orange-500/40 flex items-center justify-center font-bold font-mono text-orange-400 text-lg">
+                Hk
+              </div>
+              <div>
+                <h3 class="font-tech font-bold text-base text-white">Hook Creation</h3>
+              </div>
+            </div>
+            <span class="text-sm font-mono font-bold text-orange-400">65%</span>
+          </div>
+          <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden p-[1px] border border-white/10">
+            <div class="vu-meter-bar h-full bg-gradient-to-r from-orange-500 to-yellow-400 rounded-full transition-all duration-300" style="width: 65%;"></div>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">First 3 Seconds</span>
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">Scroll-Stopper</span>
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">Fast Cuts</span>
+          </div>
+        </div>
+
+        <!-- Skill 6 -->
+        <div class="glass-panel p-6 space-y-4 border-white/5 hover:border-emerald-500/40">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-emerald-900/40 border border-emerald-500/40 flex items-center justify-center font-bold font-mono text-emerald-400 text-lg">
+                Th
+              </div>
+              <div>
+                <h3 class="font-tech font-bold text-base text-white">Thumbnails & Visual Art</h3>
+              </div>
+            </div>
+            <span class="text-sm font-mono font-bold text-emerald-400">79%</span>
+          </div>
+          <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden p-[1px] border border-white/10">
+            <div class="vu-meter-bar h-full bg-gradient-to-r from-emerald-500 to-teal-300 rounded-full transition-all duration-300" style="width: 79%;"></div>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">Photo Editing</span>
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">CTR Boost</span>
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300">High Contrast</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Interactive Keyframe Graph Visualizer -->
+      <div class="mt-12 glass-panel p-6 sm:p-8 border-white/10">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+          <div class="space-y-1">
+            <h3 class="text-sm font-tech font-bold text-white uppercase tracking-wider">
+              Speed Ramp & Keyframe Interpolation Curve
+            </h3>
+            <p class="text-xs font-mono text-slate-400">Real-time cubic bezier acceleration visualization for hyper-smooth speed transitions.</p>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-xs text-neon-cyan">
+            <span class="w-2 h-2 rounded-full bg-neon-cyan animate-pulse"></span>
+            EASE_IN_OUT_CUBIC (0.42, 0.0, 0.58, 1.0)
+          </div>
+        </div>
+        <canvas id="keyframe-bezier-canvas" class="w-full h-32 bg-[#060a12] rounded-xl border border-white/5"></canvas>
+      </div>
+
+    </section>
+
+    <!-- Visual Breathing Room Divider -->
+    <div class="section-divider"></div>
+
+    <!-- =======================================================================
+         SECTION 6: CONTACT (PROJECT BOOKINGS & INQUIRIES)
+         ======================================================================= -->
+    <section id="contact" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20 sm:pt-12 sm:pb-28 scroll-mt-20">
+
+      <!-- Section Header -->
+      <div class="text-center space-y-4 mb-14">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-900 border border-white/10 text-xs font-mono text-neon-cyan">
+          <i class="fa-solid fa-satellite-dish text-[10px]"></i>
+          <span>PROJECT COMMISSIONS & INQUIRIES</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-display font-extrabold text-white">
+          LET'S BUILD <span class="gradient-text-cyber">TOGETHER</span>
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base leading-relaxed max-w-xl mx-auto">
+          Send me your video project details — I will get back to you within 24 hours.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-start">
+        
+        <!-- Left Column: Contact Info -->
+        <div class="lg:col-span-2 space-y-10 lg:sticky lg:top-32">
+          <div class="space-y-4">
+            <h3 class="text-2xl font-display font-bold text-white">Let's start a project together</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">
+              Whether you need high-retention short-form content, a corporate promo, or cinematic edits, I'm here to bring your vision to life. Reach out directly or fill the form.
+            </p>
+          </div>
+
+          <div class="space-y-8">
+            <!-- Location -->
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-slate-900/80 border border-white/10 flex items-center justify-center text-neon-cyan shrink-0 shadow-[0_0_15px_rgba(0,245,212,0.15)]">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <div class="space-y-1 mt-1">
+                <h4 class="text-sm font-mono font-bold text-white tracking-wider">LOCATION</h4>
+                <p class="text-sm text-slate-400">Rabat, Morocco</p>
+                <p class="text-xs text-slate-500 font-mono">Available Worldwide</p>
+              </div>
+            </div>
+            
+            <!-- Email -->
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-slate-900/80 border border-white/10 flex items-center justify-center text-electric-blue shrink-0 shadow-[0_0_15px_rgba(0,180,216,0.15)]">
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+              <div class="space-y-1 mt-1">
+                <h4 class="text-sm font-mono font-bold text-white tracking-wider">EMAIL</h4>
+                <p class="text-sm text-slate-400"><a href="mailto:nabiliatta10@gmail.com" class="hover:text-neon-cyan transition-colors">nabiliatta10@gmail.com</a></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right Column: Formulaire -->
+        <div class="lg:col-span-3">
+          <!-- Project Transmission Form -->
+          <div class="glass-panel p-6 sm:p-10 space-y-6 border-white/10 shadow-[0_0_40px_rgba(0,245,212,0.06)]">
+
+            <div class="border-b border-white/10 pb-5 flex items-center justify-between">
+              <div>
+                <h3 class="text-base font-tech font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                  <i class="fa-solid fa-satellite-dish text-neon-cyan"></i> Project Transmission
+                </h3>
+                <p class="text-xs font-mono text-slate-400 mt-1">Direct priority inbox — Quick response.</p>
+              </div>
+              <span class="hidden sm:flex items-center gap-1.5 text-[11px] font-mono text-emerald-400 bg-emerald-950/40 px-3 py-1 rounded-full border border-emerald-500/30">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                ONLINE
+              </span>
+            </div>
+
+            <form id="project-booking-form" class="space-y-5" novalidate>
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="space-y-1.5">
+                  <label for="contact-name" class="block text-xs font-mono uppercase text-slate-400 font-semibold">YOUR NAME *</label>
+                  <input type="text" id="contact-name" name="from_name" required
+                         placeholder="e.g., John Doe"
+                         class="w-full bg-slate-950 border border-white/15 rounded-lg px-4 py-3 text-sm text-white placeholder-slate-600 focus:border-neon-cyan focus:outline-none font-mono transition-colors">
+                </div>
+                <div class="space-y-1.5">
+                  <label for="contact-email" class="block text-xs font-mono uppercase text-slate-400 font-semibold">REPLY-TO EMAIL *</label>
+                  <input type="email" id="contact-email" name="reply_to" required
+                         placeholder="yourname@email.com"
+                         class="w-full bg-slate-950 border border-white/15 rounded-lg px-4 py-3 text-sm text-white placeholder-slate-600 focus:border-neon-cyan focus:outline-none font-mono transition-colors">
+                </div>
+              </div>
+
+              <div class="space-y-1.5">
+                <label for="contact-subject" class="block text-xs font-mono uppercase text-slate-400 font-semibold">PROJECT TYPE / VIDEO STYLE</label>
+                <input type="text" id="contact-subject" name="subject"
+                       placeholder="e.g., YouTube Video, TikTok/Reels, Business Promo Ad"
+                       class="w-full bg-slate-950 border border-white/15 rounded-lg px-4 py-3 text-sm text-white placeholder-slate-600 focus:border-neon-cyan focus:outline-none font-mono transition-colors">
+              </div>
+
+              <div class="space-y-1.5">
+                <label for="contact-message" class="block text-xs font-mono uppercase text-slate-400 font-semibold">PROJECT DETAILS & VISION *</label>
+                <textarea id="contact-message" name="message" rows="5" required
+                          placeholder="Describe your video idea, number of videos needed, and any reference links (YouTube/Vimeo)..."
+                          class="w-full bg-slate-950 border border-white/15 rounded-lg px-4 py-3 text-sm text-white placeholder-slate-600 focus:border-neon-cyan focus:outline-none font-mono resize-none transition-colors"></textarea>
+              </div>
+
+              <button type="submit" id="booking-submit-btn" class="w-full btn-cinema text-sm py-4">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>SUBMIT PROJECT</span>
+              </button>
+
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       CINEMATIC VIDEO PLAYER MODAL (FULLSCREEN)
+       ========================================================================= -->
+  <div id="cinema-modal" class="fixed inset-0 z-[100] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4 sm:p-8">
+    <div class="relative w-full max-w-5xl glass-panel-cinema rounded-2xl overflow-hidden border border-white/20 shadow-2xl flex flex-col max-h-[90vh]">
+      
+      <!-- Modal Top Bar -->
+      <div class="p-4 bg-[#090d15] border-b border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-rose-500 animate-pulse"></span>
+          <div>
+            <h3 id="modal-project-title" class="text-base font-display font-bold text-white">Project Title</h3>
+            <span id="modal-project-client" class="text-xs font-mono text-neon-cyan">Client Name</span>
+          </div>
+        </div>
+        <button id="close-modal-btn" class="w-9 h-9 rounded-lg bg-slate-800/80 hover:bg-rose-500/20 hover:text-rose-400 text-slate-400 flex items-center justify-center transition-colors">
+          <i class="fa-solid fa-xmark text-base"></i>
+        </button>
+      </div>
+
+      <!-- Modal Video Viewport -->
+      <div class="relative aspect-video bg-black flex items-center justify-center overflow-hidden" id="modal-video-container">
+        <!-- Content injected dynamically via showcase.js (video or iframe) -->
+      </div>
+
+      <!-- Modal Info Footer -->
+      <div class="p-6 bg-[#090d15] border-t border-white/10 space-y-3 overflow-y-auto">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div id="modal-project-role" class="text-xs font-mono text-purple-400 font-bold">Role & Scope</div>
+          <div id="modal-project-tools" class="flex flex-wrap gap-2">
+            <!-- Populated via showcase.js -->
+          </div>
+        </div>
+        <p id="modal-project-desc" class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          Project description details.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notifications Transceiver -->
+  <div id="toast-container"></div>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="content-layer border-t border-white/10 bg-[#06080d] py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 font-mono text-xs text-slate-400">
+      
+      <div class="flex items-center gap-3">
+        <div class="w-7 h-7 rounded-full bg-gradient-to-br from-neon-cyan to-deep-violet flex items-center justify-center text-black font-tech font-black text-xs">SE</div>
+        <span>© 2026 SAYMON EDITS. ALL RIGHTS RESERVED.</span>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <span>TIMECODE FORMAT: SMPTE 24.00 FPS</span>
+        <span class="text-neon-cyan">ACES COLOR SYSTEM CERTIFIED</span>
+      </div>
+
+      <div>
+        <a href="#home" class="text-slate-300 hover:text-neon-cyan transition-colors flex items-center gap-2">
+          <span>RETURN TO TOP</span>
+          <i class="fa-solid fa-arrow-up text-[10px]"></i>
+        </a>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/hero-3d.js"></script>
+  <script src="js/canvas-waves.js"></script>
+  <script src="js/before-after.js"></script>
+  <script src="js/nle-timeline.js"></script>
+  <script src="js/showcase.js"></script>
+  <script src="js/skills.js"></script>
+  <script src="js/booking-contact.js"></script>
+</body>
+</html>

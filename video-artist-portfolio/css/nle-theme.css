@@ -1,0 +1,411 @@
+/* ==========================================================================
+   NLE TIMELINE & COLOR SUITE SPECIALIZED STYLES
+   Realistic DaVinci / Premiere sequence tracks, playhead, clip inspector & LUT UI
+   ========================================================================== */
+
+/* NLE Sequence Timeline Container */
+.nle-timeline-wrapper {
+  background: #090d15;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* NLE Control Bar / Sequence Header */
+.nle-top-bar {
+  background: #0d131f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.nle-transport-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nle-btn-tool {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.nle-btn-tool:hover, .nle-btn-tool.active {
+  background: rgba(0, 245, 212, 0.15);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 10px rgba(0, 245, 212, 0.25);
+}
+
+/* Timeline Ruler */
+.nle-ruler-container {
+  height: 30px;
+  background: #0b0f19;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  display: flex;
+}
+
+.nle-ruler-header {
+  width: 90px;
+  min-width: 90px;
+  background: #0c111c;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.05em;
+  z-index: 5;
+}
+
+.nle-ruler-marks {
+  flex: 1;
+  height: 100%;
+  position: relative;
+}
+
+.ruler-tick {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  padding-left: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+}
+
+/* Timeline Body Tracks Area */
+.nle-tracks-body {
+  position: relative;
+  background: #070a10;
+  min-height: 260px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+/* Track Row */
+.nle-track-row {
+  display: flex;
+  height: 60px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  position: relative;
+}
+
+.nle-track-header {
+  width: 90px;
+  min-width: 90px;
+  background: #0c111c;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.4rem 0.6rem;
+  z-index: 5;
+}
+
+.track-label {
+  font-family: var(--font-tech);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.track-controls {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.track-pill {
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #64748b;
+  cursor: pointer;
+}
+.track-pill.active {
+  background: rgba(0, 245, 212, 0.2);
+  color: var(--neon-cyan);
+}
+
+/* Track Content Lane */
+.nle-track-lane {
+  flex: 1;
+  position: relative;
+  background: rgba(255, 255, 255, 0.01);
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 80px 100%;
+}
+
+/* Clip Blocks */
+.nle-clip {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  border-radius: 6px;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all var(--transition-fast);
+}
+
+.nle-clip:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
+
+.nle-clip.selected {
+  outline: 2px solid #fff;
+  box-shadow: 0 0 20px rgba(0, 245, 212, 0.6);
+  z-index: 12;
+}
+
+.clip-vfx {
+  background: linear-gradient(135deg, rgba(58, 134, 255, 0.8) 0%, rgba(30, 80, 180, 0.9) 100%);
+  border-color: #3a86ff;
+}
+
+.clip-edit {
+  background: linear-gradient(135deg, rgba(131, 56, 236, 0.8) 0%, rgba(90, 24, 154, 0.9) 100%);
+  border-color: #8338ec;
+}
+
+.clip-audio-vox {
+  background: linear-gradient(135deg, rgba(6, 214, 160, 0.8) 0%, rgba(2, 128, 94, 0.9) 100%);
+  border-color: #06d6a0;
+}
+
+.clip-audio-score {
+  background: linear-gradient(135deg, rgba(255, 190, 11, 0.8) 0%, rgba(200, 140, 0, 0.9) 100%);
+  border-color: #ffbe0b;
+}
+
+.clip-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.clip-meta {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Playhead Scrubber Line */
+.nle-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 28%;
+  width: 2px;
+  background-color: var(--amber-record);
+  box-shadow: 0 0 10px var(--amber-record);
+  z-index: 20;
+  pointer-events: none;
+  transition: left 0.05s linear;
+}
+
+.nle-playhead-handle {
+  position: absolute;
+  top: 0;
+  left: -7px;
+  width: 16px;
+  height: 18px;
+  background-color: var(--amber-record);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 60%, 50% 100%, 0% 60%);
+  cursor: ew-resize;
+  pointer-events: auto;
+  box-shadow: 0 0 8px var(--amber-record);
+}
+
+/* Clip Inspector Panel */
+.clip-inspector {
+  background: #0d121c;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.25rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .clip-inspector {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* ==========================================================================
+   BEFORE / AFTER COMPARISON SLIDER STYLES
+   ========================================================================== */
+
+.before-after-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 245, 212, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  user-select: none;
+}
+
+.ba-image-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.ba-after-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  clip-path: inset(0 0 0 50%);
+}
+
+.ba-slider-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 15px var(--neon-cyan), 0 0 30px rgba(0, 245, 212, 0.8);
+  cursor: ew-resize;
+  z-index: 10;
+}
+
+.ba-slider-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(13, 19, 31, 0.9);
+  border: 2px solid var(--neon-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(0, 245, 212, 0.8);
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.ba-badge-label {
+  position: absolute;
+  bottom: 1.25rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 6px;
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(12px);
+  z-index: 5;
+}
+
+.ba-badge-before {
+  left: 1.25rem;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #94a3b8;
+}
+
+.ba-badge-after {
+  right: 1.25rem;
+  background: rgba(0, 245, 212, 0.2);
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 15px rgba(0, 245, 212, 0.4);
+}
+
+/* Color Grading Scope / Scopes Monitor Graphics */
+.color-grading-scopes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  background: #080c14;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.scope-card {
+  background: #0c121e;
+  border-radius: 6px;
+  padding: 0.6rem;
+  text-align: center;
+}
+
+.scope-title {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.scope-canvas {
+  width: 100%;
+  height: 60px;
+  background: #05080e;
+  border-radius: 4px;
+}
